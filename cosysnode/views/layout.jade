@@ -1,0 +1,11 @@
+doctype html
+html
+  head
+    title= title
+    link(rel='stylesheet', href='/stylesheets/style.css')
+  body
+    block content
+    if watchScript
+      script
+        include js/eventsource-polyfill.js
+        include js/client-script.js
