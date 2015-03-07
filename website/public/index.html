@@ -37,6 +37,9 @@
 
     <script src="js/markdown.js"></script>
 
+    <!-- cosysnode dependencies -->
+    <script src="js/mustache.js"></script>
+    <script src="js/cosysnode.js"></script>
 </head>
 
 <body>
@@ -121,38 +124,19 @@ instance d'ici peu.</p>
     </form>
 </div>
 
-
-    <p></p>
-    <div id="show-button">
-        <a class="button-success pure-button" href="javascript:showHide('comments-list',%20'show-button');">Voir les 3 commentaires</a>
-    </div>
-
-    <div id="comments-list" style="display:none">
-        <hr>
-        <div class="inline">
-            <img src="img/b133b66b7edc9f7ffb5cf74a87e63652.jpg" style="float:left; margin-right:10px" height="32" width="32">
-            <span class="title">Sabcat</span>
-            <span> - 2014-12-20 22:00:05</span>
-        </div>
-        <p>Ho Marrant. J'avais jamais lu un billet sur la joie de quitter l'auto-hébergement pour faire du Minitel.
-Un must-have. Je fais suivre. :pouce_vert_vert_facebook_like:</p>
-        <hr>
-        <div class="inline">
-            <a href="http://www.cdetc.fr/">
-            <img src="img/b74caa9a8f22ddff361b5ea413ea4f7a.jpg" style="float:left; margin-right:10px" height="32" width="32">
-            </a>
-            <span class="title">nicosomb</span>
-            <span> - 2014-12-21 08:36:38</span>
-        </div>
-        <p>Merci d'utiliser wallabag et d'en parler :-) </p>
-        <hr>
-        <div class="inline">
-            <img src="img/308a3596152a79231f3feedc49afa4ef.jpg" style="float:left; margin-right:10px" height="32" width="32">
-            <span class="title">Yax</span>
-            <span> - 2014-12-21 10:08:43</span>
-        </div>
-        <p>@Sabcat Ce qui me semble important c'est héberger soi-même ses services. </p>
-    </div>
+    <!-- comments container -->
+    <div id="cosys-comments">Chargement...</div>
+    <script id="template" type="x-tmpl-mustache">
+{{#comments}}
+<hr>
+<div class="inline">
+    <img src="http://www.gravatar.com/avatar/{{gravatar}}.jpg" style="float:left; margin-right:10px" height="32" width="32">
+    <span class="title">{{author}}</span>
+    <span> - {{date}}</span>
+</div>
+<p>{{preview}}</p>
+{{/comments}}
+    </script>
 
 <script type="text/javascript"><!--
 
