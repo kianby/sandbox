@@ -1,0 +1,9 @@
+{
+ "name": "Cosysnode-Frontend",
+ "version": "0.0.1",
+ "dependencies": {
+    "backbone": "1.1.2",
+    "requirejs": "2.1.16",
+    "bootstrap": "latest"
+  }
+}
