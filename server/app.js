@@ -3,7 +3,7 @@ var finalhandler = require('finalhandler');
 var serveStatic = require('serve-static');
 
 var serve = serveStatic("./public"),
-  port = 5000;;
+  port = 5000;
 
 var server = http.createServer(function(req, res){
   var done = finalhandler(req, res)

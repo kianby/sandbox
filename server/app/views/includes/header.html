@@ -1,0 +1,29 @@
+<nav class="navbar navbar-fixed-top navbar-inverse" id="navbar" role="navigation">
+    <div class="container">
+        <div class="navbar-header" id="brand">
+            <a class="navbar-brand" href="/" style="margin-top:12px;">
+                <span class="na">Nodejs Passport Boilerplate</span>
+            </a>
+        </div>
+
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav pull-right">
+                {% if req.isAuthenticated() %}
+                <li class="ns-dropdown">
+                    <a href="#" class="ns-dropdown-toggle" data-toggle="dropdown">{{req.user.email}} <b class="caret"></b></a>
+                    <ul class="dropdown-menu" style="right:0;">
+                        <li><a href="/logout">Logout</a></li>
+                    </ul>
+                </li> 
+                {% else %}
+                <li>
+                    <a href="/login">Login</a>
+                </li>
+                <li>
+                    <a href="/signup">Create Account</a>
+                </li>                
+                {% endif %}          
+            </ul>                        
+        </div>
+    </div>
+</nav>

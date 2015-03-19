@@ -1,0 +1,41 @@
+body {
+  font-family: 'Open Sans', sans-serif;
+}
+.navbar-brand {
+  font-family: 'Josefin Sans', sans-serif;
+}
+.navbar-inverse .navbar-brand {
+    color: #fff;
+}
+.navbar-nav > li > a {padding-top:5px !important; padding-bottom:5px !important;}
+.navbar {min-height:36px !important;} 
+#brand .na {color: white;font-weight: bold;font-size: 24px;}
+#brand .be {font-size: 10px; background: black; color: white; padding: 1px 6px;}
+.socials img {
+  max-width: 82px;
+  width: 25%;
+}
+.navbar-nav.pull-right {
+  margin-top: 16px;
+}
+.lead {
+  font-size: 30px;
+  margin-top: 32px;
+}
+.mast {
+  font-size: 20px;
+}
+.mast li{
+  line-height: 4em;
+}
+.mast li .fa {
+    font-size: 3em;
+    text-align: center;
+    width:80px;
+}
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 60px;
+}
