@@ -29,11 +29,12 @@ var models_path = __dirname + '/app/models'
 fs.readdirSync(models_path).forEach(function (file) {
   require(models_path+'/'+file);
 });
+var User = require('./app/models/user');
 
 var app = express();
 
 // authentication
-var  auth = require('./config/auth')(app);
+var  auth = require('./config/auth')(app, User);
 
 // express settings
 require('./config/express')(app, config);

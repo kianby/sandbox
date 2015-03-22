@@ -1,6 +1,5 @@
 
-
-module.exports = function (app) {
+module.exports = function (app, User) {
 
   app.post('/authenticate', function(req, res) {
     User.findOne({email: req.body.email, password: req.body.password}, function(err, user) {
@@ -20,7 +19,7 @@ module.exports = function (app) {
                 res.json({
                     type: false,
                     data: "Incorrect email/password"
-                });    
+                });
             }
         }
     });
@@ -28,6 +27,7 @@ module.exports = function (app) {
 
 
   app.post('/signin', function(req, res) {
+    console.log("Body " + req.body);
     User.findOne({email: req.body.email, password: req.body.password}, function(err, user) {
         if (err) {
             res.json({

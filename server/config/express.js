@@ -7,7 +7,7 @@ var express = require('express')
   , helpers = require('view-helpers')
   , swig = require('swig')
   , compression = require('compression')
-  , bodyParser = require('body-parser');;
+  , bodyParser = require('body-parser');
 
 module.exports = function (app, config) {
 
@@ -39,12 +39,6 @@ module.exports = function (app, config) {
   // connect flash for flash messages
   app.use(flash());
 
-  app.use(function (req, res, next) {
-      res.locals.session = req.session;
-      res.locals.req = req;
-      next();
-  });
-
   // assume "not found" in the error msgs
   // is a 404. this is somewhat silly, but
   // valid, you can do whatever you like, set
@@ -65,4 +59,10 @@ module.exports = function (app, config) {
     res.status(404).render('404', { url: req.originalUrl, error: 'Not found' })
   });
 
+  app.use(function(req, res, next) {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST');
+    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type, Authorization');
+    next();
+  });
 }
