@@ -2,7 +2,7 @@
 # -*- coding: UTF-8 -*-
 
 
-from core.service import Service
+from app.service import Service
 
 
 class AuthService(Service):

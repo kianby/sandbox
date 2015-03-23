@@ -1,8 +1,8 @@
 #!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
-from core.services.auth import AuthService
-from core.helpers.string_helper import StringHelper
+from app.services.auth import AuthService
+from app.helpers.string_helper import StringHelper
 
 
 class Factory:

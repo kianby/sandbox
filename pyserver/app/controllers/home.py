@@ -5,7 +5,7 @@ from bottle import route, redirect
 from bson.json_util import dumps
 
 
-@route('/hearteat', method='GET')
+@route('/heartbeat', method='GET')
 def heartbeat(mongodb):
     return "OK"
 

@@ -3,12 +3,12 @@
 
 import inspect
 from bottle import request
-from core.factory import Factory
+from app.factory import Factory
 
 
-class preRequestPlugin(object):
+class AuthPlugin(object):
 
-    def __init__(self, keyword='preRequest', **kwargs):
+    def __init__(self, keyword='auth', **kwargs):
         self.keyword = keyword
         self.name = "plugin:" + keyword
 
@@ -21,7 +21,7 @@ class preRequestPlugin(object):
             return callback
 
         def wrapper(*args, **kwargs):
-            if not request.path.startswith("/resources"):
+            if not request.path.startswith("/api"):
                 #
                 # Setup session and environment stuff
                 #
