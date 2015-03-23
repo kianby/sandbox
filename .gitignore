@@ -29,3 +29,7 @@ node_modules
 
 # Bower libs
 server/public/js/lib
+
+# Python 
+__pycache__
+*.pyc
