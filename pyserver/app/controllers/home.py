@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
-from bottle import route, redirect
+from bottle import route, request, abort
 from bson.json_util import dumps
 
 
@@ -20,7 +20,16 @@ def get_api(mongodb):
     return "OK"
 
 
-@route('/create', method='POST')
-def create(mongodb):
-    mongodb['collection'].insert({'a': 1, 'b': 2})
-    redirect("/")
+def check(username, password):
+    return username == 'admin'
+
+
+@route('/signin', method='POST')
+def signin(app):
+    print(app)
+    username = request.forms.get('username')
+    password = request.forms.get('password')
+    if check(username, password):
+        return 'OK'
+    else:
+        abort(401, 'invalid username or password')

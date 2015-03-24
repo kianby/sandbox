@@ -4,6 +4,7 @@
 # import controllers
 import bottle
 from app.bottle.auth_plugin import AuthPlugin
+from app.bottle.inject_plugin import InjectPlugin
 
 from bottle import run, install
 from bottle.ext.mongo import MongoPlugin
@@ -17,6 +18,7 @@ plugin = MongoPlugin(uri="mongodb://" + app.config["mongodb.server"],
                      db=app.config["mongodb.dbname"], json_mongo=True)
 install(plugin)
 install(AuthPlugin())
+install(InjectPlugin())
 
 bottle.debug(app.config["global.debug"])
 
