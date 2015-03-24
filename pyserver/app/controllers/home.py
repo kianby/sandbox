@@ -7,7 +7,7 @@ from bson.json_util import dumps
 
 @route('/heartbeat', method='GET')
 def heartbeat(mongodb):
-    return "OK"
+    return "alive"
 
 
 @route('/get', method='GET')
