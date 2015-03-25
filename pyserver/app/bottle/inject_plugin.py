@@ -2,7 +2,7 @@
 # -*- coding: UTF-8 -*-
 
 import inspect
-
+from app.factory import Factory
 
 class InjectPlugin(object):
 
@@ -18,12 +18,16 @@ class InjectPlugin(object):
     def apply(self, callback, context):
         args = inspect.getargspec(context.callback)[0]
 
-        if 'app' in args:
+        moreargs = {}
+        if 'auth' in args:
+            moreargs['auth'] = self.app.config['factory'].getAuthService()
 
+        if moreargs:
             def wrapper(*args, **kwargs):
-                kwargs['app'] = self.app
+                for k in moreargs:
+                    kwargs[k] = moreargs[k]
                 body = callback(*args, **kwargs)
                 return body
             return wrapper
-
-        return callback
+        else:
+            return callback

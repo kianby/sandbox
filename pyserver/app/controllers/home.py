@@ -25,8 +25,8 @@ def check(username, password):
 
 
 @route('/signin', method='POST')
-def signin(app):
-    print(app)
+def signin(auth):
+    print(auth)
     username = request.forms.get('username')
     password = request.forms.get('password')
     if check(username, password):
