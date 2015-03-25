@@ -12,31 +12,43 @@ class AuthService:
         self.app = app
         self.db = app.config['db']
         self.secret = app.config['global.jwtsecret']
-        self.delta = datetime.timedelta(seconds=600)
+        timeout = int(app.config['global.session_timeout'])
+        self.idle_timeout = datetime.timedelta(minutes=timeout)
 
-    def authenticate(self, username, password):
-        BAD_RESULT = [None, None]
+    def __authenticate(self, username, password):
+        user = self.db.users.find_one({'username': username})
+        return user and user['username'] == username and user['password'] == password
+
+    def __cleanSessions(self):
+        """Find and remove expired sessions"""
+        when = datetime.datetime.utcnow() - self.idle_timeout
+        self.db.sessions.remove({'used': {'$lt': when}})
+
+    def login(self, username, password):
         try:
-            user = self.db.users.find_one({'username': username})
-            if user['username'] == username and user['password'] == password:
-                d = datetime.datetime.utcnow() + self.delta
-                exp = calendar.timegm(d.utctimetuple())
-                token = jwt.encode({'user': username, 'exp': exp},
+            if self.__authenticate(username, password):
+                now = datetime.datetime.utcnow()
+                at = calendar.timegm(now.utctimetuple())
+                # encode 'at' to get a different token per user connection
+                token = jwt.encode({'user': username, 'at': at},
                                    self.secret,
                                    algorithm='HS256').decode()
-                return [token, exp]
+                self.db.sessions.insert({'username': username,
+                                         'token': token,
+                                         'login': now,
+                                         'used': now})
+                return token
         except:
             # TODO log something
             pass
-        return BAD_RESULT
+        return None
 
     def validate(self, username, token):
-        try:
-            user = self.db.users.find_one({'username': username})
-            decoded = jwt.decode(token, self.secret)
-            print('Expiration : %d' % decoded['exp'])
-            return user and user.get('username') == decoded['user']
-        except:
-            # TODO log something
-            pass
-        return False
+        self.__cleanSessions()
+        session = self.db.sessions.find_one({'username': username,
+                                             'token': token})
+        # update session last used
+        if session:
+            now = datetime.datetime.utcnow()
+            self.db.sessions.update(session, {'$set': {'used': now}})
+        return session

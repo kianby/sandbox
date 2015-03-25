@@ -18,8 +18,8 @@ def get_api():
 def signin(auth):
     username = request.json.get('username')
     password = request.json.get('password')
-    token, exp = auth.authenticate(username, password)
+    token = auth.login(username, password)
     if token:
-        return {'token': token, 'exp': exp}
+        return {'token': token}
     else:
         abort(401, 'invalid username or password')
