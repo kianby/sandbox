@@ -2,34 +2,24 @@
 # -*- coding: UTF-8 -*-
 
 from bottle import route, request, abort
-from bson.json_util import dumps
 
 
 @route('/heartbeat', method='GET')
-def heartbeat(mongodb):
-    return "alive"
-
-
-@route('/get', method='GET')
-def index(mongodb):
-    return dumps(mongodb['collection'].find())
-
-
-@route('/api', method='GET')
-def get_api(mongodb):
+def heartbeat():
     return "OK"
 
 
-def check(username, password):
-    return username == 'admin'
+@route('/api', method='GET')
+def get_api():
+    return "1.0"
 
 
 @route('/signin', method='POST')
 def signin(auth):
-    print(auth)
-    username = request.forms.get('username')
-    password = request.forms.get('password')
-    if check(username, password):
-        return 'OK'
+    username = request.json.get('username')
+    password = request.json.get('password')
+    token, exp = auth.authenticate(username, password)
+    if token:
+        return {'token': token, 'exp': exp}
     else:
         abort(401, 'invalid username or password')

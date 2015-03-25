@@ -2,7 +2,7 @@
 # -*- coding: UTF-8 -*-
 
 import inspect
-from app.factory import Factory
+
 
 class InjectPlugin(object):
 
@@ -19,6 +19,8 @@ class InjectPlugin(object):
         args = inspect.getargspec(context.callback)[0]
 
         moreargs = {}
+        if 'db' in args:
+            moreargs['db'] = self.app.config['db']
         if 'auth' in args:
             moreargs['auth'] = self.app.config['factory'].getAuthService()
 

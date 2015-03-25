@@ -2,30 +2,17 @@
 # -*- coding: UTF-8 -*-
 
 from app.services.auth import AuthService
-from app.helpers.string_helper import StringHelper
 
 
 class Factory:
 
-    db = None
+    app = None
     auth = None
 
-    def __init__(self, db=None):
-        self.db = db
+    def __init__(self, app):
+        self.app = app
 
     def getAuthService(self):
         if self.auth is None:
-            self.auth = AuthService()
+            self.auth = AuthService(self.app)
         return self.auth
-
-    def getStringHelper(self):
-        return self._getService(StringHelper(self.db), [])
-
-    def _getService(self, service, stuff):
-        for item in stuff:
-            service.inject(item[0], item[1])
-        return service
-
-    def _getDAO(self, dao):
-        dao.inject("dateHelper", self.getDateHelper())
-        return dao
