@@ -23,6 +23,8 @@ class InjectPlugin(object):
             moreargs['db'] = self.app.config['db']
         if 'auth' in args:
             moreargs['auth'] = self.app.config['factory'].getAuthService()
+        if 'logger' in args:
+            moreargs['logger'] = self.app.config['logger']
 
         if moreargs:
             def wrapper(*args, **kwargs):

@@ -1,6 +1,22 @@
 #!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
+# initialize logging
+import logging
+
+
+def configure_logging(level):
+    print(level)
+    logger.setLevel(level)
+    ch = logging.StreamHandler()
+    ch.setLevel(level)
+    # create formatter
+    formatter = logging.Formatter('[%(asctime)s] %(levelname)s %(message)s')
+    # add formatter to ch
+    ch.setFormatter(formatter)
+    # add ch to logger
+    logger.addHandler(ch)
+
 # initialize bottle
 import bottle
 from bottle import run, install
@@ -31,6 +47,14 @@ if db.users.count() == 0:
 install(AuthPlugin())
 install(InjectPlugin())
 
-bottle.debug(app.config["global.debug"])
+# set logging level
+debug = app.config['global.debug'].lower() == 'true'
+bottle.debug(debug)
+logging_level = (20, 10)[debug]
+logger = logging.getLogger(__name__)
+configure_logging(logging_level)
+app.config['logger'] = logger
 
-run(app=app, host=app.config["http.server"], port=app.config["http.port"])
+# start bottle
+logger.info('Server started')
+run(app=app, host=app.config['http.server'], port=app.config['http.port'])

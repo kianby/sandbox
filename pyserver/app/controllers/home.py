@@ -5,7 +5,9 @@ from bottle import route, request, abort
 
 
 @route('/heartbeat', method='GET')
-def heartbeat():
+def heartbeat(logger):
+    logger.info('hearbeat level INFO')
+    logger.debug('hearbeat level DEBUG')
     return "OK"
 
 
