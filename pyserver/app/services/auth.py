@@ -4,13 +4,13 @@
 import calendar
 import datetime
 import jwt
+from server import db
 
 
 class AuthService:
 
     def __init__(self, app):
         self.app = app
-        self.db = app.config['db']
         self.secret = app.config['global.jwtsecret']
         timeout = int(app.config['global.session_timeout'])
         self.idle_timeout = datetime.timedelta(minutes=timeout)
@@ -22,7 +22,7 @@ class AuthService:
     def __cleanSessions(self):
         """Find and remove expired sessions"""
         when = datetime.datetime.utcnow() - self.idle_timeout
-        self.db.sessions.remove({'used': {'$lt': when}})
+        db.sessions.remove({'used': {'$lt': when}})
 
     def login(self, username, password):
         try:
@@ -33,7 +33,7 @@ class AuthService:
                 token = jwt.encode({'user': username, 'at': at},
                                    self.secret,
                                    algorithm='HS256').decode()
-                self.db.sessions.insert({'username': username,
+                db.sessions.insert({'username': username,
                                          'token': token,
                                          'login': now,
                                          'used': now})

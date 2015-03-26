@@ -13,7 +13,7 @@ class AuthPlugin(object):
         self.keyword = keyword
 
     def setup(self, app):
-        self.auth = app.config['factory'].getAuthService()
+        self.auth = app.config['services'].getAuthService()
 
     def apply(self, callback, context):
 

@@ -1,3 +1,4 @@
+PyJWT==1.0.0
 bottle==0.12.8
-bottle-mongodb==0.2.1
+peewee==2.5.0
 pymongo==2.8

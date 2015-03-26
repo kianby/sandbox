@@ -6,7 +6,6 @@ import logging
 
 
 def configure_logging(level):
-    print(level)
     logger.setLevel(level)
     ch = logging.StreamHandler()
     ch.setLevel(level)
@@ -20,28 +19,23 @@ def configure_logging(level):
 # initialize bottle
 import bottle
 from bottle import run, install
-from pymongo import MongoClient
 
 from app.bottle.auth_plugin import AuthPlugin
 from app.bottle.inject_plugin import InjectPlugin
-from app.factory import Factory
+from app.factory import ServiceFactory
 
-# import controllers
 from app.controllers import *
 
 app = bottle.app()
 app.config.load_config("server.conf")
 
 # intitialize database
-client = MongoClient(app.config["mongodb.server"])
-db = client[app.config["mongodb.dbname"]]
-app.config['db'] = db
-app.config['factory'] = Factory(app)
+db = ""
+from app.models import *
 
-# TODO move following code elsewhere
-if db.users.count() == 0:
-    # TODO hash passwords
-    db.users.insert({'username': 'admin', 'password': 'admin'})
+service_factory = ServiceFactory(app)
+# service_factory.getDatabaseService().setup()
+app.config['services'] = service_factory
 
 # load plugins
 install(AuthPlugin())
