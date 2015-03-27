@@ -4,7 +4,8 @@
 import calendar
 import datetime
 import jwt
-from server import db
+
+db = "something to solve"
 
 
 class AuthService:
