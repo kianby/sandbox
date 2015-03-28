@@ -2,7 +2,7 @@
 # -*- coding: UTF-8 -*-
 
 from bottle import request, abort
-
+from app.services import auth
 
 class AuthPlugin(object):
 
@@ -13,7 +13,7 @@ class AuthPlugin(object):
         self.keyword = keyword
 
     def setup(self, app):
-        self.auth = app.config['services'].getAuthService()
+        pass
 
     def apply(self, callback, context):
 
@@ -23,7 +23,7 @@ class AuthPlugin(object):
         def wrapper(*args, **kwargs):
             username = request.get_header('User')
             token = request.get_header('Token')
-            if self.auth.validate(username, token):
+            if auth.validate(username, token):
                 body = callback(*args, **kwargs)
             else:
                 body = abort(401, 'Unauthorized request')

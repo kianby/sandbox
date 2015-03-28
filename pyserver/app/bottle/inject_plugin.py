@@ -2,7 +2,7 @@
 # -*- coding: UTF-8 -*-
 
 import inspect
-
+from app.services import auth
 
 class InjectPlugin(object):
 
@@ -20,11 +20,11 @@ class InjectPlugin(object):
 
         moreargs = {}
         if 'db' in args:
-            moreargs['db'] = self.app.config['db']
+            moreargs['db'] = None
         if 'auth' in args:
-            moreargs['auth'] = self.app.config['factory'].getAuthService()
+            moreargs['auth'] = auth
         if 'logger' in args:
-            moreargs['logger'] = self.app.config['logger']
+            moreargs['logger'] = logger
 
         if moreargs:
             def wrapper(*args, **kwargs):

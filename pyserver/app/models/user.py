@@ -7,12 +7,9 @@ from peewee import DateField
 from app.services.database import get_db
 
 
-class Session(Model):
+class User(Model):
     username = CharField()
     password = CharField()
-    token = CharField()
-    login = DateField()
-    last_used = DateField()
 
     class Meta:
         database = get_db()

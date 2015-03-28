@@ -16,8 +16,8 @@ def get_api():
     return "1.0"
 
 
-@route('/signin', method='POST')
-def signin(auth):
+@route('/login', method='POST')
+def login(auth):
     username = request.json.get('username')
     password = request.json.get('password')
     token = auth.login(username, password)
