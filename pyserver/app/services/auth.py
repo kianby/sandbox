@@ -6,6 +6,7 @@ import datetime
 import jwt
 import config
 from app.models.user import User
+from app.models.session import Session
 
 import logging
 logger = logging.getLogger(__name__)
@@ -25,12 +26,11 @@ def login(username, password):
             at = calendar.timegm(now.utctimetuple())
             # encode 'at' to get a different token per user connection
             token = jwt.encode({'user': username, 'at': at},
-                               self.secret,
+                               config.JWTSECRET,
                                algorithm='HS256').decode()
-            # db.sessions.insert({'username': username,
-            #                         'token': token,
-            #                         'login': now,
-            #                         'used': now})
+            new_session = Session(username=username, token=token, login=now,
+                    last_used=now)
+            new_session.save()
             return token
     except:
         logger.exception('login failed')

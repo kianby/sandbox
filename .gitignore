@@ -33,3 +33,6 @@ server/public/js/lib
 # Python 
 __pycache__
 *.pyc
+
+# SQLite
+*.db
