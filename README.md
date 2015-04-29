@@ -1,3 +1,3 @@
-# cosysnode
+# Sandbox
 
-Sandbox for playing with Node, Python and Javascript. 
+My sandbox for playing with Node, Python, Javascript, whatever... 
