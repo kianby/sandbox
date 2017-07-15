@@ -2,7 +2,7 @@ import sys
 import nnpy
 import time
 
-# nanocat --pub --connect-local 5565  --data "[B] status" -d 3
+# nanocat --pub --connect-local 5565  --data "[A] status" -i 5
 
 def node(name):
 
