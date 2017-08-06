@@ -1,0 +1,10 @@
+attrs==17.2.0
+cffi==1.10.0
+clize==4.0.1
+docutils==0.13.1
+msgpack-python==0.4.8
+nnpy==1.4.1
+od==1.0
+pycparser==2.18
+sigtools==2.0.1
+six==1.10.0
