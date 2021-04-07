@@ -1,4 +1,4 @@
 PyJWT==1.0.0
-bottle==0.12.8
+bottle==0.12.19
 peewee==2.5.0
 pymongo==2.8
